@@ -14,35 +14,46 @@ import string
 def login(request):
     return render(request,'customer/newlogin_form.html')
 def login_post(request):
-    email=request.POST['log_email']
-    password=request.POST['log_pass']
-    print(email,password)
-    # salt=''.join(random.choices(string.ascii_letters,k=7))
-    salt = Login.objects.get(Email=email).salt
+    email = request.POST['log_email']
+    password = request.POST['log_pass']
 
-    print(str(salt))
-    password=salt+password
-    password = hashlib.md5(password.encode('utf-8')).hexdigest()
-    print(password)
-    lg=Login.objects.filter(Email=email,Password=password)#to check the user given email and password is matching with the database stored values
+    print(email, password)
+
+    # 1. Check user exists
+    user = Login.objects.filter(Email=email).first()
+    if not user:
+        return HttpResponse(
+            '''<script>alert('User Not Exists');window.location='/login/'</script>'''
+        )
+
+    salt = user.salt
+    print("salt:", salt)
+
+    # 2. Hash correctly (password + salt)
+    hashed_pwd = hashlib.md5((password + salt).encode('utf-8')).hexdigest()
+    print("hashed:", hashed_pwd)
+
+    # 3. Match login
+    lg = Login.objects.filter(Email=email, Password=hashed_pwd)
+
     if lg.exists():
-        # salt=''.join(random.choices(string.ascii_letters,k=7))
-        # # print(str(salt))
-        # password=salt+password
-        # password = hashlib.md5(password.encode('utf-8')).hexdigest()
-        lgg=Login.objects.get(Email=email,Password=password)#to get the email and password and store it in lg variable
-        request.session['lid']=lgg.id
+        lgg = lg.first()
+        request.session['lid'] = lgg.id
+
         if lgg.Role == 'Customer':
             return redirect('/homecus/')
         elif lgg.Role == 'business':
-             return redirect('/homebus/')
+            return redirect('/homebus/')
         elif lgg.Role == 'admin':
-             return redirect('/homeadmin/')
+            return redirect('/homeadmin/')
         else:
-           return HttpResponse('''<script>alert('User Not Exists');window.location='/login/'</script>''')         
+            return HttpResponse(
+                '''<script>alert('Role not assigned');window.location='/login/'</script>'''
+            )
     else:
-        return HttpResponse('''<script>alert('Email and Password not match');window.location='/login/'</script>''')         
-    
+        return HttpResponse(
+            '''<script>alert('Email and Password not match');window.location='/login/'</script>'''
+        )
 
 def logout(request):
     request.session['lid'] == ''
@@ -57,10 +68,9 @@ def cusreg_post(request):
     cus_email=request.POST['cus_email']
     cus_contact=request.POST['cus_contact']
     cus_pass=request.POST['cus_pass']
-    salt=''.join(random.choices(string.ascii_letters,k=7))
-    # print(str(salt))
-    cus_pass=salt+cus_pass
-    cus_pass = hashlib.md5(cus_pass.encode('utf-8')).hexdigest()
+    salt = ''.join(random.choices(string.ascii_letters, k=7))
+    cus_pass = hashlib.md5((cus_pass + salt).encode('utf-8')).hexdigest()
+
     cus_addr=request.POST['cus_addr']
     cus_gender=request.POST['gender']
     if Cusreg.objects.filter(Cus_Email=cus_email).exists():
@@ -434,10 +444,9 @@ def busreg_post(request):
     bus_email=request.POST['official_email']
     bus_contact=request.POST['official_contact']
     bus_pass=request.POST['bus_pass']
-    salt=''.join(random.choices(string.ascii_letters,k=7))
-    # print(str(salt))
-    bus_pass=salt+bus_pass
-    bus_pass = hashlib.md5(bus_pass.encode('utf-8')).hexdigest()
+    salt = ''.join(random.choices(string.ascii_letters, k=7))
+    bus_pass = hashlib.md5((bus_pass + salt).encode('utf-8')).hexdigest()
+
     bus_addr=request.POST['bus_addr']
     bus_type=request.POST['bus_type']
     reg_stat=request.POST['reg_stat']

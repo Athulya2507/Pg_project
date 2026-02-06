@@ -75,17 +75,31 @@ WSGI_APPLICATION = 'BIZCONNECT.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+import os
+from pathlib import Path
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'buzzconnect',  # New Database Name
-        'USER': 'root',
-        'PASSWORD': 'Athulya@2507',
-        'HOST': 'localhost',  # This should match the service name in docker-compose.yml
-        'PORT': '3306',
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+if os.getenv("MYSQLHOST"):   # Railway / Production
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('MYSQLDATABASE'),
+            'USER': os.getenv('MYSQLUSER'),
+            'PASSWORD': os.getenv('MYSQLPASSWORD'),
+            'HOST': os.getenv('MYSQLHOST'),
+            'PORT': os.getenv('MYSQLPORT'),
+        }
     }
-}
+else:   # Local system
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+
 
 
 # Password validation
