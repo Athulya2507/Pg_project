@@ -1,0 +1,169 @@
+{% extends 'customer/header-footer.html' %}
+{% load static %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+<head>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f4f7;
+      padding: 40px 0;
+    }
+
+    .profile-container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-header h2 {
+      color: #333;
+    }
+
+    .profile-pic {
+      display: block;
+      margin: 20px auto;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #4a90e2;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .gender-options {
+      margin-top: 10px;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #4a90e2;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #3b78c0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="profile-container">
+    <div class="profile-header">
+      <h2>Edit Profile</h2>
+      {% if prof.Profile_pic %}
+        <img src="{{ prof.Profile_pic.url }}" class="profile-pic" alt="Profile Picture">
+      {% else %}
+        <p>No profile photo uploaded</p>
+      {% endif %}
+    </div>
+
+    <form action="/editprofile_cus_post/" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="hidden" name="id" value="{{ prof.id }}"/>
+
+      <div class="form-group">
+        <label for="photoupload">Update Profile Picture</label>
+        <input type="file" name="photoupload" id="photoupload">
+      </div>
+
+      <div class="form-group">
+        <label for="cus_name">Name</label>
+        <input type="text" id="cus_name" name="cus_name" value="{{ prof.Cus_Name }}">
+      </div>
+
+      <div class="form-group">
+        <label for="cus_email">Email</label>
+        <input type="email" id="cus_email" name="cus_email" value="{{ prof.Cus_Email }}">
+      </div>
+
+      <div class="form-group">
+        <label for="cus_contact">Contact</label>
+        <input type="tel" id="cus_contact" name="cus_contact" value="{{ prof.Contact }}">
+      </div>
+
+      <div class="form-group">
+        <label for="cus_pass">Password</label>
+        <input type="password" id="cus_pass" name="cus_pass" value="{{ prof.Password }}">
+      </div>
+
+      <div class="form-group">
+        <label for="cus_addr">Address</label>
+        <textarea id="cus_addr" name="cus_addr">{{ prof.Address }}</textarea>
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="cus_post">Post</label>
+        <input type="text" id="cus_post" name="cus_post" value="{{ prof.post }}">
+      </div>
+
+      <div class="form-group">
+        <label for="cus_pin">Pin</label>
+        <input type="text" id="cus_pin" name="cus_pin" value="{{ prof.pin }}">
+      </div>
+
+      <div class="form-group">
+        <label for="cus_dis">District</label>
+        <input type="text" id="cus_dis" name="cus_dis" value="{{ prof.district }}">
+      </div> -->
+
+      <div class="form-group">
+        <label>Gender</label>
+        <div class="gender-options">
+          <input type="radio" name="gender" value="Male" {% if prof.Gender == "Male" %}checked{% endif %}> Male
+          <input type="radio" name="gender" value="Female" {% if prof.Gender == "Female" %}checked{% endif %}> Female
+          <input type="radio" name="gender" value="Others" {% if prof.Gender == "Others" %}checked{% endif %}> Others
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Update</button>
+    </form>
+  </div>
+</body>
+{% endblock %}

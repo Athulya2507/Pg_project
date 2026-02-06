@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<table width="200" border="1">
+  <tr>
+    <td>Sl.No.</td>
+    <!-- <td>Business Name</td> -->
+    <td>Product Name</td> 
+    <td>Offer Description</td>
+    <td>Discount Percentage</td>
+    <td>Start Date</td>
+    <td>End Date</td>
+    <td>Edit</td>
+    <td>Delete</td>
+  </tr>
+ 
+  {% for i in data %}
+  <tr>
+    <td>{{forloop.counter}}</td>
+    <!-- <td>{{i.Products.Business_Name}}</td> -->
+    <td>{{i.Products.Prod_Name}}</td>
+    <td>{{i.Offer_desc}}</td>
+    <td>{{i.Discount}}</td>
+    <td>{{i.Start_date}}</td>
+    <td>{{i.End_date}}</td>
+    <td><a href="/editoffers/{{i.id}}">edit offer</a></td>
+    <td><a href="/deloffers/{{i.id}}">Delete offer</a></td>
+
+  </tr>
+ {% endfor %}
+</table>
+</body>
+</html>

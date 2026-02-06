@@ -1,0 +1,116 @@
+{% extends 'business/header-footer_bus.html' %}
+{% load static %}
+{% block title %}Edit Contact Details{% endblock %}
+
+{% block body %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Edit Contact Details</title>
+
+<style>
+   body {
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       background-color: #f2f4f7;
+       margin: 0;
+       padding: 0;
+   }
+
+   h3 {
+       text-align: center;
+       margin-top: 30px;
+       color: #333;
+   }
+
+   .forms {
+       width: 600px;
+       margin: 30px auto;
+       background: #ffffff;
+       padding: 30px;
+       border-radius: 10px;
+       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+   }
+
+   table {
+       width: 100%;
+       border-collapse: collapse;
+   }
+
+   td {
+       padding: 12px 10px;
+       vertical-align: top;
+   }
+
+   label {
+       font-weight: 600;
+       color: #555;
+       display: block;
+       margin-bottom: 6px;
+   }
+
+   input[type="text"],
+   input[type="tel"],
+   input[type="url"],
+   input[type="email"],
+   textarea {
+       width: 100%;
+       padding: 10px 12px;
+       border: 1px solid #ccc;
+       border-radius: 6px;
+       box-sizing: border-box;
+       font-size: 15px;
+       color: #333;
+       background-color: #fff;
+   }
+
+   textarea {
+       resize: vertical;
+       min-height: 120px;
+       line-height: 1.5;
+       overflow-y: auto;
+   }
+
+   input[type="submit"] {
+       background-color: #4CAF50;
+       color: white;
+       padding: 12px 20px;
+       font-size: 16px;
+       border: none;
+       border-radius: 6px;
+       cursor: pointer;
+       transition: background-color 0.3s ease;
+   }
+
+   input[type="submit"]:hover {
+       background-color: #45a049;
+   }
+</style>
+
+</head>
+
+<body>
+    <form action="/editcontact_post/" method="POST" class="forms" enctype="multipart/form-data">
+        <h3>Edit Contact Details</h3>
+        {% csrf_token %}
+        <input type="hidden" id="prod_id" name="id" value="{{ edit_con.id }}" />
+        <table>
+            <tr>
+                <td><label for="off_web">Enter the Official website:</label></td>
+                <td><input type="url" id="off_web" name="off_web" value="{{ edit_con.Off_web }}" /></td>
+            </tr>
+            <tr>
+                <td><label for="linkedin">Enter your Linkedin Details:</label></td>
+                <td><input type="url" id="linkedin" name="linkedin" value="{{ edit_con.Linkedin }}" /></td>
+            </tr>
+            <tr>
+                <td><label for="social">Enter your Social media Details (if any):</label></td>
+                <td><textarea id="social" name="social">{{ edit_con.Social }}</textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Update" />
+                </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}
+</body>

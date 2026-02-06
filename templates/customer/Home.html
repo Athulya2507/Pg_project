@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+{% load static  %}
+<html>
+  <style>
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a {
+    color: rgb(5, 1, 1);
+    text-decoration: none;
+    padding: 10px;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none; /* Initially hidden */
+    position: absolute;
+    background: white; /* Change to a visible color */
+    color: black;
+    list-style: none;
+    top: 100%; /* Position it directly below the parent */
+    left: 0;
+    padding: 0;
+    min-width: 150px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex-direction: column; /* Ensure it stacks vertically */
+}
+
+.dropdown-menu li {
+    padding: 8px 10px;
+}
+
+.dropdown-menu li a {
+    color: black;
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+  </style>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Roomify</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="/static/digitf-html/css/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,700&display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{% static 'digitf-html/css/style.css' %}" rel="stylesheet">
+  <!-- responsive style -->
+  <link href="/static/digitf-html/css/responsive.css" rel="stylesheet" />
+</head>
+ 
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="">
+          <div class="collapse navbar-collapse" style="color:  #121212;">
+            ROOMIFY</div>
+            <!-- <img src="/static/digitf-html/images/logo.png" alt="" /> -->
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ">
+              <!-- <li class="nav-item active">
+                <a class="nav-link" href="/homecus/">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/homecus/#c2"> About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/business_logos/"> Business </a>
+              </li> -->
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="/products_page/"> Products </a>
+              </li> -->
+              <li class="nav-item">
+                <a class="nav-link" href="/login/"> Login </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="/cusserv_view/"> Services  </a>
+              </li> -->
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="/cusoffers_view/">  Offers </a>
+              </li> -->
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="/cuscontact_view/">Contact us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout/">Logout</a>
+              </li> -->
+            </ul>
+            <div class="user_option">
+              <!-- <a href="">
+                <img src="/static/digitf-html/images/user.png" alt="">
+                <span>
+                        <a href="/editprofile_cus/" class="nav-link">Profile</a>
+                        
+          
+                </span>
+              </a> -->
+              <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
+                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
+              </form>
+            </div>
+          </div>
+          <div>
+            <div class="custom_menu-btn ">
+              <button>
+                <span class=" s-1"  style="background-color: #121212;">
+
+                </span>
+                <span class="s-2"  style="background-color: #121212;">
+
+                </span>
+                <span class="s-3"  style="background-color: #121212;">
+
+                </span>
+              </button>
+            </div>
+          </div>
+
+        </nav>
+      </div>
+      <title>Products List</title>
+            <link rel="stylesheet" href="{% static 'productcss.css' %}">
+            <style>
+                .rating {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+        .rating span {
+            font-size: 20px;
+        }
+            </style>
+    </header>   
+    <body>
+        <h2>Product List</h2>
+        <div class="product-container">
+            {% for i in products %}
+            <div class="product-card"  onclick="showLoginAlert()">
+                <img src="{{ i.Prod_image.url }}" alt="Product Image">
+                <div class="card-content">
+                    <h3><strong>{{ i.Prod_Name }}</strong></h3>
+                    <p class="category">{{ i.Prod_cat }}</p>
+                    <p class="description">{{ i.Prod_des }}</p>
+                    <p class="business">Business: {{ i.Busreg.Business_Name }}</p>
+                    <p class="availability">Availability: {{ i.Availability }}</p>
+                    {% for offer in offers %}
+                    {% if offer.Products.id == i.id %}
+                    <div class="card-content">
+                    <p class="offer">Offer: {{ offer.Offer_desc }}</p>
+                    <p class="offer"> Discount Percentage: {{ offer.Discount }}</p>
+                    </div>
+        
+                    {% endif %}
+                 
+                    {% empty %}
+                   
+                    {% endfor %}
+                    <p class="price">Price:
+                        {% if i.discounted_price != i.Prod_price %}
+                        <span style="text-decoration: line-through; color: red;">₹{{ i.Prod_price }}</span>
+                        <span style="color: green; font-weight: bold;"> ₹{{ i.discounted_price }}</span>
+                        {% else %}
+                        <span style="color: black;">₹{{ i.Prod_price }}</span>
+                        {% endif %}
+                    </p>
+                    {% if i.has_offer %}
+                <p class="offer">Offer: {{ i.offer_desc }}</p>
+                <p class="offer">Discount Percentage: {{ i.discount_percentage }}%</p>
+              {% endif %}
+        
+              <div class="rating">
+                {% if i.avg_rating > 0 %}
+                  <p>Rating:
+                    {% for star in "12345" %}
+                      {% if forloop.counter <= i.avg_rating %}
+                        <span style="color: gold;">★</span>
+                      {% else %}
+                        <span style="color: lightgray;">☆</span>
+                      {% endif %}
+                    {% endfor %}
+                    ({{ i.avg_rating }}/5)
+                  </p>
+                {% else %}
+                  <p>Rating: Not Rated</p>
+                {% endif %}
+              </div>
+                    
+                    
+        
+                    <!-- <div class="buttons">
+                         <a href="/editprod/{{ i.id }}" class="edit-btn">Edit</a> -->
+                        <!-- <a href="/deleteproduct/{{ i.id }}" class="delete-btn">Delete</a> -->
+        
+                        <!-- <a href="/sendmail/{{i.id}}/" class="view-btn">
+                        Enquiry
+                        </a>
+                        <a href="/feedback/{{i.id }}"class="view-btn">
+                        Feedback
+                        </a> -->
+                        <!-- <a href="/addoffers/{{ i.id }}" class="add-btn">Add Offers</a> -->
+                    <!-- </div>  -->
+                </div>
+            </div>
+            {% endfor %}
+            <script>
+              function showLoginAlert()
+              {
+                alert("To send an enquiry or know more about the product, please log in.");
+                window.location.href="/roomify/";
+              }
+            </script>
+        </div>
+       
+    <!-- info section -->
+  <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="info_logo">
+        <h2>
+          Roomify
+        </h2>
+      </div>
+      <div class="row">
+
+        <div class="col-md-3">
+          <div class="info_contact">
+            <h5>
+              About Roomify
+            </h5>
+            <div>
+              <div class="img-box">
+                <img src="/static/digitf-html/images/location-white.png" width="18px" alt="">
+              </div>
+              <p>
+                Address
+              </p>
+            </div>
+            <div>
+              <div class="img-box">
+                <img src="/static/digitf-html/images/telephone-white.png" width="12px" alt="">
+              </div>
+              <p>
+                +91 1234567890
+              </p>
+            </div>
+            <div>
+              <div class="img-box">
+                <img src="/static/digitf-html/images/envelope-white.png" width="18px" alt="">
+              </div>
+              <p>
+                support@roomify.com
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="info_info">
+            <h5>
+              Informations
+            </h5>
+            <p>
+              Roomify connects businesses selling room décor products with customers looking for unique and stylish home furnishings.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="info_insta">
+            <h5>
+              Instagram
+            </h5>
+            <div class="insta_container">
+              <div>
+                <a href="">
+                  <div class="insta-box b-1">
+                    <img src="/static/digitf-html/images/i-1.jpg" alt="">
+                  </div>
+                </a>
+                <a href="">
+                  <div class="insta-box b-2">
+                    <img src="/static/digitf-html/images/i-2.jpg" alt="">
+                  </div>
+                </a>
+              </div>
+
+              <div>
+                <a href="">
+                  <div class="insta-box b-3">
+                    <img src="/static/digitf-html/images/i-3.jpg" alt="">
+                  </div>
+                </a>
+                <a href="">
+                  <div class="insta-box b-4">
+                    <img src="/static/digitf-html/images/i-4.jpg" alt="">
+                  </div>
+                </a>
+              </div>
+              <div>
+                <a href="">
+                  <div class="insta-box b-3">
+                    <img src="/static/digitf-html/images/i-5.jpg" alt="">
+                  </div>
+                </a>
+                <a href="">
+                  <div class="insta-box b-4">
+                    <img src="/static/digitf-html/images/i-6.jpg" alt="">
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="info_form ">
+            <h5>
+              Newsletter
+            </h5>
+            <form action="">
+              <input type="email" placeholder="Enter your email">
+              <button>
+                Subscribe
+              </button>
+            </form>
+            <div class="social_box">
+              <a href="">
+                <img src="/static/digitf-html/images/fb.png" alt="">
+              </a>
+              <a href="">
+                <img src="/static/digitf-html/images/twitter.png" alt="">
+              </a>
+              <a href="">
+                <img src="/static/digitf-html/images/linkedin.png" alt="">
+              </a>
+              <a href="">
+                <img src="/static/digitf-html/images/youtube.png" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <section class="container-fluid footer_section ">
+    <div class="container">
+      <p>
+                                                                                    &copy; 2019 Roomify All Rights Reserved 
+                                                                                    <a href="https://html.design/"></a>
+      </p>
+    </div>
+  </section>
+  <!-- end  footer section -->
+
+
+
+  <script type="text/javascript" src="/static/digitf-html/js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="/static/digitf-html/js/bootstrap.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js">
+  </script>
+  <script type="text/javascript">
+    $(".owl-carousel").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: [],
+      autoplay: true,
+      autoplayHoverPause: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        420: {
+          items: 2
+        },
+        1000: {
+          items: 5
+        }
+      }
+
+    });
+  </script>
+  <script>
+    var nav = $("#navbarSupportedContent");
+    var btn = $(".custom_menu-btn");
+    btn.click
+    btn.click(function (e) {
+
+      e.preventDefault();
+      nav.toggleClass("lg_nav-toggle");
+      document.querySelector(".custom_menu-btn").classList.toggle("menu_btn-style")
+    });
+  </script>
+  <script>
+    $('.carousel').on('slid.bs.carousel', function () {
+      $(".indicator-2 li").removeClass("active");
+      indicators = $(".carousel-indicators li.active").data("slide-to");
+      a = $(".indicator-2").find("[data-slide-to='" + indicators + "']").addClass("active");
+      console.log(indicators);
+
+    })
+  </script>
+
+</body>
+</body>
+</html>

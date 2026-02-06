@@ -1,0 +1,61 @@
+{% extends 'business/header-footer_bus.html' %}
+{% load static %}
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
+    {% block title %}Products List{% endblock %}
+    {% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="{% static 'productcss.css' %}">
+</head>
+<body>
+
+<h2>Product List</h2>
+<div class="product-container">
+    {% for i in data %}
+    <div class="product-card">
+        <img src="{{ i.Prod_image.url }}" alt="Product Image">
+        <div class="card-content">
+            <h3>{{ i.Prod_Name }}</h3>
+            <p class="category">{{ i.Prod_cat }}</p>
+            <p class="description">{{ i.Prod_des }}</p>
+            <p class="business">Business: {{ i.Busreg.Business_Name }}</p>
+            <p class="price">Price: ₹{{ i.Prod_price }}</p>
+            <p class="availability">Availability: {{ i.Availability }}</p>
+            {% for offer in offers %}
+               {% if offer.Products.id == i.id %}
+               <div class="card-content">
+               <p class="offer">Offer: {{ offer.Offer_desc }}</p>
+               <p class="offer"> Discount Percentage: {{ offer.Discount }}</p>
+               <p class="offer"> Start Date:{{ offer.Start_date }}</p>
+               <p class="offer"> End Date:{{ offer.End_date }}</p>
+               </div>
+               {% endif %}
+            {% empty %}
+            
+            {% endfor %}
+
+            <div class="buttons">
+                <a href="/editprod/{{ i.id }}" class="edit-btn">Edit</a>
+                <a href="/deleteproduct/{{ i.id }}" class="delete-btn">Delete</a>
+                <!-- <a href="/offers/" class="view-btn">View Offers</a> -->
+                <a href="/addoffers/{{ i.id }}" class="add-btn">Add Offers</a>
+                {% for offer in offers %}
+                {% if offer.Products.id == i.id %}
+                <a href="{% url 'editoffers' offer.id %}" class="add-btn">Edit Offer</a>
+                <a href="{% url 'deloffers' offer.id %}" class="add-btn">Delete Offers</a>
+               {% endif %}
+               {% endfor %} 
+
+               
+                
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>

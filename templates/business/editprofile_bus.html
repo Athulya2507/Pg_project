@@ -1,0 +1,179 @@
+{% extends 'business/header-footer_bus.html' %}
+{% load static %}
+{% block title %}Edit Business Profile{% endblock %}
+
+{% block body %}
+<head>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f4f7;
+      padding: 40px 0;
+    }
+
+    .profile-container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-header h2 {
+      color: #333;
+    }
+
+    .logo-preview {
+      display: block;
+      margin: 20px auto;
+      height: 120px;
+      width: 120px;
+      object-fit: cover;
+      border: 3px solid #4a90e2;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .gender-options,
+    .radio-group {
+      margin-top: 10px;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #4a90e2;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 25px;
+    }
+
+    .submit-btn:hover {
+      background-color: #3b78c0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="profile-container">
+    <div class="profile-header">
+      <h2>Edit Business Profile</h2>
+      {% if prof.Logo %}
+        <img src="{{ prof.Logo.url }}" class="logo-preview" alt="Business Logo">
+      {% else %}
+        <p>No logo uploaded</p>
+      {% endif %}
+    </div>
+
+    <form action="/editprofile_bus_post/" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="hidden" name="id" value="{{ prof.id }}"/>
+
+      <div class="form-group">
+        <label for="logoupload">Update Business Logo</label>
+        <input type="file" name="logoupload" id="logoupload">
+      </div>
+
+      <div class="form-group">
+        <label for="bus_name">Business Name</label>
+        <input type="text" id="bus_name" name="bus_name" value="{{ prof.Business_Name }}">
+      </div>
+
+      <div class="form-group">
+        <label for="own_name">Owner Name</label>
+        <input type="text" id="own_name" name="own_name" value="{{ prof.Owner_Name }}">
+      </div>
+
+      <div class="form-group">
+        <label for="official_email">Official Email</label>
+        <input type="email" id="official_email" name="official_email" value="{{ prof.Bus_Email }}">
+      </div>
+
+      <div class="form-group">
+        <label for="official_contact">Official Contact</label>
+        <input type="tel" id="official_contact" name="official_contact" value="{{ prof.contact }}">
+      </div>
+
+      <div class="form-group">
+        <label for="bus_pass">Password</label>
+        <input type="password" id="bus_pass" name="bus_pass" value="{{ prof.Password }}">
+      </div>
+
+      <div class="form-group">
+        <label for="bus_addr">Official Address</label>
+        <textarea id="bus_addr" name="bus_addr">{{ prof.Address }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="bus_type">Business Type</label>
+        <select name="bus_type" id="bus_type">
+          <option value="{{ prof.Business_type }}">{{ prof.Business_type }}</option>
+          <option value="Sole proprietorship">Sole proprietorship</option>
+          <option value="General partnership">General partnership</option>
+          <option value="Limited partnership (LP)">Limited partnership (LP)</option>
+          <option value="Limited liability company (LLC)">Limited liability company (LLC)</option>
+          <option value="Non-profit">Non-profit</option>
+          <option value="C corporation">C corporation</option>
+          <option value="S corporation">S corporation</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Registration Status</label>
+        <div class="radio-group">
+          <input type="radio" name="reg_stat" value="Registered" {% if prof.Registration_stat == "Registered" %}checked{% endif %}> Registered
+          <input type="radio" name="reg_stat" value="Not Registered" {% if prof.Registration_stat == "Not Registered" %}checked{% endif %}> Not Registered
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="regdetupload">Upload Registration Details</label>
+        <input type="file" id="regdetupload" name="regdet_upload">
+      </div>
+
+      <button type="submit" class="submit-btn">Update</button>
+    </form>
+  </div>
+</body>
+{% endblock %}

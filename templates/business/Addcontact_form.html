@@ -1,0 +1,138 @@
+{% extends 'business/header-footer_bus.html' %}
+{% load static %}
+
+{% block title %}Contact Details{% endblock %}
+
+{% block body %}
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #eef2f7, #ffffff);
+    margin: 0;
+    padding: 0;
+  }
+
+  .form-container {
+    max-width: 700px;
+    margin: 80px auto;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    padding: 40px;
+  }
+
+  h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  td {
+    padding: 12px;
+    vertical-align: top;
+  }
+
+  label {
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    resize: vertical;
+    height: 100px;
+  }
+
+  .form-actions {
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  input[type="submit"],
+  input[type="reset"] {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #17a2b8;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  input[type="reset"] {
+    background-color: #6c757d;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #138496;
+  }
+
+  input[type="reset"]:hover {
+    background-color: #5a6268;
+  }
+</style>
+
+<div class="form-container">
+  <form action="/addcontact_post/" method="POST" enctype="multipart/form-data">
+    <h3>Contact Details</h3>
+    {% csrf_token %}
+    <input type="hidden" id="prod_id" name="id" />
+
+    <!-- Uncomment and include these fields if needed later
+    <tr>
+      <td><label for="owner_name">Owner Name:</label></td>
+      <td><input type="text" id="owner_name" name="owner_name" /></td>
+    </tr>
+    <tr>
+      <td><label for="off_phn">Official Phone:</label></td>
+      <td><input type="tel" id="off_phn" name="off_phn" /></td>
+    </tr>
+    <tr>
+      <td><label for="off_email">Official Email:</label></td>
+      <td><input type="email" id="off_email" name="off_email" /></td>
+    </tr>
+    -->
+
+    <table>
+      <tr>
+        <td><label for="off_web">Official Website:</label></td>
+        <td><input type="url" id="off_web" name="off_web" /></td>
+      </tr>
+      <tr>
+        <td><label for="linkedin">LinkedIn Profile:</label></td>
+        <td><input type="url" id="linkedin" name="linkedin" /></td>
+      </tr>
+      <tr>
+        <td><label for="social">Social Media (if any):</label></td>
+        <td><textarea id="social" name="social"></textarea></td>
+      </tr>
+    </table>
+
+    <div class="form-actions">
+      <input type="submit" value="Add" />
+      <input type="reset" value="Clear" />
+    </div>
+  </form>
+</div>
+{% endblock %}

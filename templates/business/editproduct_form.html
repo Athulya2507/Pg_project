@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form action="/editprodviewbus_post/" method="POST" class="forms" enctype="multipart/form-data">
+    <h3 align="center">Edit Product Details</h3>
+    
+    {% csrf_token %}
+    <table  border="1" align="center">
+      <tr>
+        <td><input type="hidden" id="id" name="id" value="{{edit_prod.id}}" /></td></tr><!--this is the second step of edit process--><!--here we are storing the passed id of the product to edit_prod variable62 which is already stored in the table to show it in the edit form automatically--><!--here we need a variable edit_prod beacause all the id and other data can be passed only as a key value pair like a dictionary-->
+        <tr>
+        <td><label>Enter Product Name:</label></td>
+        <td><input type="text" id="prod_name" name="prod_name" value="{{edit_prod.Prod_Name}}" /></td>
+       </tr>
+       <tr> 
+        <td><label>Enter the Product Category:</label></td>
+        <td><select name="prod_cat">
+        <option value="{{edit_prod.Prod_cat}}">{{edit_prod.Prod_cat}}</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Lighting">Lighting</option>
+        <option value="Flooring">Flooring</option>
+        <option value="Wall Decor">Wall Decor</option>
+        <option value="Textiles">Textiles</option>
+        <option value="Hardware">Hardware</option>
+        <option value="Accents">Accents</option>
+        <option value="Kitchenware">Kitchenware</option>
+        <option value="Bathroom Fixtures">Bathroom Fixtures</option>
+        
+        
+        </select></td>
+       </tr>
+       <tr> 
+        <td><label>Enter Product Price:</label></td>
+        <td><input type="text" id="prod_price" name="prod_price" value="{{edit_prod.Prod_price}}" /></td>
+       </tr>
+       <tr>
+        <td><label>Availability Status:</label></td>
+        <td>
+          <label><input type="radio" name="avb_stat" value="Yes" {% if edit_prod.Availability == "Yes" %} checked {% endif %}>Yes</label>
+          <label><input type="radio" name="avb_stat" value="No" {% if edit_prod.Availability == "No" %} checked {% endif %}>No</label>
+       
+        </td>
+       </tr>
+       <tr> 
+        <td><label>Enter Product Description:</label></td>
+        <td><textarea id="prod_des" name="prod_des" >{{edit_prod.Prod_des}}</textarea></td>
+       </tr>
+       <tr>
+       <td><label>Upload Product Image</label></td>
+       <td><input type="file" id="prod_img" name="prod_img" ></td>
+       <td><img src="{{edit_prod.Prod_image.url}}" height="100px" width="100px"></td>
+       </tr>
+       <tr>
+       <td colspan="2" align="center">
+       <input type="submit" value="Submit" />
+       <input type="reset" value="Clear" />
+       </td></tr>
+    </table>
+    </form>
+    </body>
+    </html>
+    

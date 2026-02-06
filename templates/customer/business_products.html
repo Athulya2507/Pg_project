@@ -1,0 +1,77 @@
+{% extends  'customer/header-footer.html'%}
+<head>
+    <title>{% block title %}Products{% endblock %}</title>
+</head>
+<body>
+{% block body %}
+<section class="brand_section">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          {{ business.Business_Name }}
+        </h2>
+      </div>
+      <div class="brand_container layout_padding2">
+        {% for i in bus_products %}
+        <div class="box">
+          <h6><strong>{{ i.Prod_Name }}</strong></h6>
+          <div class="buttons">
+            <div class="img-box">
+              <img src="{{ i.Prod_image.url }}" alt="">
+            </div>
+            <div class="detail-box">
+              &nbsp;&nbsp;
+              <h6 class="price">
+                Price:
+                {% if i.has_offer %}
+                  <span style="text-decoration: line-through; color: red;">₹{{ i.Prod_price }}</span>
+                  <span style="color: green; font-weight: bold;">₹{{ i.discounted_price }}</span>
+                {% else %}
+                  <span style="color: black;">₹{{ i.Prod_price }}</span>
+                {% endif %}
+              </h6>
+        
+              {% if i.has_offer %}
+                <p class="offer">Offer: {{ i.offer_desc }}</p>
+                <p class="offer">Discount Percentage: {{ i.discount_percentage }}%</p>
+              {% endif %}
+        
+              <div class="rating">
+                {% if i.avg_rating > 0 %}
+                  <p>Rating:
+                    {% for star in "12345" %}
+                      {% if forloop.counter <= i.avg_rating %}
+                        <span style="color: gold;">★</span>
+                      {% else %}
+                        <span style="color: lightgray;">☆</span>
+                      {% endif %}
+                    {% endfor %}
+                    ({{ i.avg_rating }}/5)
+                  </p>
+                {% else %}
+                  <p>Rating: Not Rated</p>
+                {% endif %}
+              </div>
+        
+              <a href="/sendmail/{{i.id}}/" class="view-btn">Enquiry</a>
+            </div>
+          </div>
+        </div>
+        
+            <!-- <p class="availability">Availability: {{ i.Availability }}</p>
+              <a href="/sendmail/{{i.id}}/" class="view-btn">
+                Enquiry
+                </a>
+                <a href="/feedback/{{i.id }}"class="view-btn">
+                Feedback
+                </a> -->
+              <!-- </div>
+            </div>
+        </div>  -->
+        {% endfor %}
+      </div>
+    </div>
+   
+  </section>
+</body>
+{% endblock %}

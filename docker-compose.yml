@@ -1,0 +1,73 @@
+# version: '3.8'
+
+# services:
+#   web:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     command: python manage.py runserver 0.0.0.0:8000
+#     volumes:
+#       - .:/BIZCONNECT
+#     ports:
+#       - "8000:8000"
+#     depends_on:
+#       - db
+#     environment:
+#       - DB_HOST=db
+#       - DB_PORT=3306
+#       - DB_NAME=bizconnect
+#       - DB_USER=root
+#       - DB_PASSWORD=
+
+#   db:
+#     image: mysql:8.0
+#     volumes:
+#       - mysql_data:/var/lib/mysql
+#     restart: always
+#     environment:
+#       MYSQL_DATABASE: bizconnect
+#       MYSQL_USER: root
+#       MYSQL_PASSWORD: 
+#       MYSQL_ROOT_PASSWORD: Athulya@2507
+
+# volumes:
+#   mysql_data:
+
+
+
+
+
+# version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/BIZCONNECT
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=buzzconnect
+      - DB_USER=root
+      - DB_PASSWORD=
+      - DB_ROOT_PASSWORD= Athulya@2507
+
+
+  db:
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: buzzconnect
+      MYSQL_ROOT_PASSWORD: Athulya@2507  # Only set the root password here
+
+volumes:
+  mysql_data:

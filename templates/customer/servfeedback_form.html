@@ -1,0 +1,152 @@
+{% extends 'customer/header-footer.html' %}
+{% load static %}
+
+{% block title %}Service Feedback{% endblock %}
+
+{% block body %}
+<style>
+  .feedback-form-wrapper {
+    background-color: #f4f4f4;
+    padding: 60px 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feedback-card {
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .feedback-card h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 26px;
+  }
+
+  .feedback-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 20px;
+  }
+
+  .feedback-table td {
+    vertical-align: top;
+  }
+
+  .feedback-table label {
+    font-weight: 500;
+    color: #444;
+  }
+
+  .feedback-table input[type="text"],
+  .feedback-table textarea {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .feedback-table textarea {
+    resize: vertical;
+    height: 100px;
+  }
+
+  .star-rating {
+    direction: rtl;
+    display: inline-flex;
+    justify-content: flex-start;
+  }
+
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+
+  .star-rating label {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .star-rating input[type="radio"]:checked ~ label,
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color: #ffc700;
+  }
+
+  .form-buttons {
+    text-align: center;
+    margin-top: 25px;
+  }
+
+  .form-buttons input[type="submit"],
+  .form-buttons input[type="reset"] {
+    background-color: #ffc700;
+    color: #000;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+  }
+
+  .form-buttons input[type="submit"]:hover,
+  .form-buttons input[type="reset"]:hover {
+    background-color: #e0b600;
+  }
+</style>
+
+<div class="feedback-form-wrapper">
+  <div class="feedback-card">
+    <h3>Service Feedback Form</h3>
+    <form action="/servfeedback_post/" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="hidden" name="id" value="{{ss.id}}" />
+      <table class="feedback-table">
+        <tr>
+          <td><label>Rating:</label></td>
+          <td>
+            <div class="star-rating">
+              <input type="radio" id="star5" name="rating" value="5" required />
+              <label for="star5" title="Excellent">&#9733;</label>
+
+              <input type="radio" id="star4" name="rating" value="4" />
+              <label for="star4" title="Good">&#9733;</label>
+
+              <input type="radio" id="star3" name="rating" value="3" />
+              <label for="star3" title="Satisfied">&#9733;</label>
+
+              <input type="radio" id="star2" name="rating" value="2" />
+              <label for="star2" title="Needs Improvement">&#9733;</label>
+
+              <input type="radio" id="star1" name="rating" value="1" />
+              <label for="star1" title="Very Bad">&#9733;</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><label>Message:</label></td>
+          <td>
+            <textarea id="message" name="message" placeholder="Write your feedback here..." required></textarea>
+          </td>
+        </tr>
+      </table>
+
+      <div class="form-buttons">
+        <input type="submit" value="Submit" />
+        <input type="reset" value="Clear" />
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

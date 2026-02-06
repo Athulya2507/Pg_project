@@ -1,0 +1,102 @@
+{% extends 'business/header-footer_bus.html' %}
+{% load static %}
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
+    {% block title %}Products List{% endblock %}
+    {% block body %}
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"> -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Add Offers</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f7fa;
+        margin: 20px;
+    }
+    h3 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 60%;
+        background-color: #ffffff;
+        margin-top: 20px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        border: none;
+    }
+    table td {
+        padding: 10px;
+        border: none;
+    }
+    label {
+        font-weight: bold;
+        color: #444;
+    }
+    input[type="text"], input[type="date"], textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    textarea {
+        resize: vertical;
+        height: 80px;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 25px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+
+<body>
+ <form action="/editoffers_post/" method="POST" class="forms" enctype="multipart/form-data">
+<h3 align="center">Edit Offers Details</h3>
+
+{% csrf_token %}
+<table  border="1" align="center">
+   <tr>
+      <td><input type="hidden" id="id" name="id" value="{{edit_offer.id}}" /></td></tr>
+   <!-- <tr> 
+    <td><label>Enter Product Name:</label></td>
+    <td><input type="text" id="prod_name" name="prod_name" value="{{edit_offer.Products.Prod_Name}}"/></td>
+   </tr> -->
+   <tr> 
+    <td><label>Enter Offer Description:</label></td>
+    <td><textarea id="offer_desc" name="offer_desc" >{{edit_offer.Offer_desc}}</textarea></td>
+   </tr>
+   <tr> 
+    <td><label>Enter Discount Percentage:</label></td>
+    <td><input type="text" id="discount" name="discount" value="{{edit_offer.Discount}}" /></td>
+   </tr>
+   <tr> 
+    <td><label>Enter Start Date:</label></td>
+    <td><input type="date" id="s_date" name="s_date" value="{{edit_offer.Start_date|date:'Y-m-d'}}" /></td>
+   </tr>
+   <tr> 
+    <td><label>Enter End Date:</label></td>
+    <td><input type="date" id="e_date" name="e_date" value="{{edit_offer.End_date|date:'Y-m-d'}}"/></td>
+   </tr>
+   <tr>
+   <td colspan="2" align="center">
+   <input type="submit" value="Update" />
+   
+   
+   </td></tr>
+</table>
+</form>
+{% endblock %}
+</body>
+</html>

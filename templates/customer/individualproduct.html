@@ -1,0 +1,54 @@
+{% extends  'customer/header-footer.html'%}
+<head>
+    <title>{% block title %}Products{% endblock %}</title>
+</head>
+<body>
+{% block body %}
+<section class="discount_section  layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <h2 class="main_heading">
+                {{ selected_product.Prod_Name }}
+            </h2>
+            <div class="img-box">
+                {% for i in ind_prod %}
+                <img src="{{ i.Prod_image.url }}" alt="">
+                <h2>
+                  Category:  {{ i.Prod_cat }}
+                </h2>
+                <h2>
+                  Description:  {{ i.Prod_des }}
+                </h2>
+                <h2>
+                  Price:   {{ i.Prod_price }}
+                </h2>
+                <h2>
+                  Availability Status:  {{ i.Availability }}
+                </h2>
+                <h2>
+                  Business Name:  {{ i.Busreg.Business_Name }}
+                </h2>
+               {% endfor %}
+            </div>
+          
+            <div class="">
+              <a href="/feedback/{{selected_product.id}}/">
+                Feedback
+              </a>
+              <a href="/sendmail/{{selected_product.id }}/">
+                Send Enquiry
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="img-box">
+            <img src="{{ i.Prod_image.url }}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock %}

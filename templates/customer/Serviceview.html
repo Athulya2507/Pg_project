@@ -1,0 +1,79 @@
+{% extends 'customer/header-footer.html' %}
+{% load static %}
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
+  {% block title %}Products List{% endblock %}
+    {% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services List</title>
+    <link rel="stylesheet" href="{% static 'productcss.css' %}">
+</head>
+<body>
+
+<h2>Services List</h2>
+
+<div class="product-container">
+    {% for i in data %}
+    <div class="product-card">
+        <!-- <img src="{{ i.Prod_image.url }}" alt="Product Image"> -->
+        <div class="card-content">
+            <h2><strong>{{ i.Serv_cat }}</strong></h2>
+            <!-- <p class="category">{{ i.Prod_cat }}</p>
+            <p class="description">{{ i.Prod_des }}</p> -->
+            <p class="business"><h3>Business Name: {{ i.Busreg.Business_Name }}</h3></p>&nbsp;&nbsp;
+            <p class="price">Service Description: {{ i.Serv_desc }}</p> 
+            <!-- <p class="availability">Availability: {{ i.Availability }}</p> -->
+
+            <div class="buttons">
+                <a href="/sendmailserv/{{ i.id }}/"  class="edit-btn">Enquiry</a>
+                <a href="/servfeedback/{{i.id}}/" class="delete-btn">Feedback</a>
+                <!-- <a href="/offers/" class="view-btn">View Offers</a> -->
+                <!-- <a href="/addoffers/{{ i.id }}" class="add-btn">Add Offers</a> -->
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>
+
+
+<!-- {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services List</title>
+    <link rel="stylesheet" href="{% static 'productcss.css' %}">
+</head>
+<body>
+<h2>Services List</h2>
+<div class="product-container">
+    {% for i in service %}
+    <div class="product-card">
+        <div class="card-content">
+            <h3>{{ i.Serv_cat}}</h3>
+            <p class="business">Business: {{ i.Busreg.Business_Name }}</p>
+            <p class="price">Service Charge: ${{ i.Serv_charge}}</p>
+
+            <div class="buttons">
+
+
+                <a href="/sendmailserv/{{ i.Busreg.id }}/" class="view-btn">
+                  Service Enquiry
+                </a>
+                <a href="/servfeedback/{{i.id}}/" class="view-btn">
+                Feedback
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</body>
+</html>
+
+
+ -->

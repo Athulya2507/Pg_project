@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+
+<table width="592" border="1">
+  <tr>
+    <td width="51">Sl.No.</td>
+    <td width="51">Cus_id</td>
+    <td width="46">Cus_Name</td>
+    <td width="46">Cus_Contact</td>
+    <td width="47">Business_id</td>
+    <td width="60">Enquiry</td>
+    
+    
+  </tr>
+  
+  {% for i in data %}
+  <tr>
+    <td>{{forloop.counter}}</td>
+    <td>{{i.Cus_id}}</td>
+    <td>{{i.Cus_Name}}</td>
+    <td>{{i.Cus_Contact}}</td>
+    <td>{{i.Business_id}}</td>
+    <td>{{i.Enquiry}}</td>
+    
+    
+  </tr>
+  {%endfor%}
+  
+ 
+  
+</table>
+</body>
+</html>

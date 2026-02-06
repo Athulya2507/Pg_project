@@ -1,0 +1,97 @@
+{% extends 'customer/header-footer.html' %}
+{% load static %}
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
+    {% block title %}Products List{% endblock %}
+    {% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products List</title>
+    <link rel="stylesheet" href="{% static 'productcss.css' %}">
+    <style>
+        .rating {
+    font-size: 18px;
+    margin: 8px 0;
+}
+.rating span {
+    font-size: 20px;
+}
+    </style>
+</head>
+<body>
+<h2>Product List</h2>
+<div class="product-container">
+    {% for i in products %}
+    <div class="product-card">
+        <img src="{{ i.Prod_image.url }}" alt="Product Image">
+        <div class="card-content">
+            <h3><strong>{{ i.Prod_Name }}</strong></h3>
+            <p class="category">{{ i.Prod_cat }}</p>
+            <p class="description">{{ i.Prod_des }}</p>
+            <p class="business">Business: {{ i.Busreg.Business_Name }}</p>
+            <p class="availability">Availability: {{ i.Availability }}</p>
+            {% for offer in offers %}
+            {% if offer.Products.id == i.id %}
+            <div class="card-content">
+            <p class="offer">Offer: {{ offer.Offer_desc }}</p>
+            <p class="offer"> Discount Percentage: {{ offer.Discount }}</p>
+            </div>
+
+            {% endif %}
+         
+            {% empty %}
+           
+            {% endfor %}
+            <p class="price">Price:
+                {% if i.discounted_price != i.Prod_price %}
+                <span style="text-decoration: line-through; color: red;">₹{{ i.Prod_price }}</span>
+                <span style="color: green; font-weight: bold;"> ₹{{ i.discounted_price }}</span>
+                {% else %}
+                <span style="color: black;">₹{{ i.Prod_price }}</span>
+                {% endif %}
+            </p>
+            {% if i.discount_percentage %}
+            <p class="offer">Offer: {{ i.offer_desc }}</p>
+            <p class="offer">Discount Percentage: {{ i.discount_percentage }}%</p>
+            {% endif %}
+            <!--Product average rating code-->
+            <div class="rating">
+                {% if i.avg_rating > 0 %}
+                    <p>Rating:
+                        {% for star in "12345" %}
+                            {% if forloop.counter <= i.avg_rating %}
+                                <span style="color: gold;">★</span>
+                            {% else %}
+                                <span style="color: lightgray;">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                        ({{ i.avg_rating }}/5)
+                    </p>
+                {% else %}
+                    <p>Rating: Not Rated</p>
+                {% endif %}
+            </div>
+            
+            
+
+            <div class="buttons">
+                <!-- <a href="/editprod/{{ i.id }}" class="edit-btn">Edit</a> -->
+                <!-- <a href="/deleteproduct/{{ i.id }}" class="delete-btn">Delete</a> -->
+
+                <a href="/sendmail/{{i.id}}/" class="view-btn">
+                Enquiry
+                </a>
+                <a href="/feedback/{{i.id }}"class="view-btn">
+                Feedback
+                </a>
+                <!-- <a href="/addoffers/{{ i.id }}" class="add-btn">Add Offers</a> -->
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>
+

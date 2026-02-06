@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Customer Profile</title>
+<style>
+   body {
+    position: relative;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; 
+    background: url('../asset/cusprof.jpg'); 
+   background-color: rgb(129, 119, 149); 
+    padding-left: 300px;
+    padding-right: 300px;
+    padding-top: 300px; 
+    padding-bottom: 300px;
+    /* filter: blur(1px); Blur effect  */ 
+    z-index: -1; 
+    
+}
+   .form { 
+            display:block;
+            justify-content: space-between;
+            align-items: center;
+            /* background-color: lightsteelblue; */
+            padding: 15px;
+            color: black;
+   } 
+   .forms {
+    margin-bottom: 500px;
+    height:auto;
+    width:auto;
+   }
+</style>
+</head>
+
+<body>
+<div class="form" align="center">
+<div class="background">
+   <img src="../asset/cusprof.jpg" height="500px" width="500px">
+</div>
+<form action="" class="forms">
+<h2 align="center">My Profile</h2>
+
+<img src="{{prof.Profile_pic.url}}" alt="Profile Pic" style="border-radius:2%" align="center"   /><br /><br />
+<label align="center">Name:</label>
+<input type="text" id="cus_name" name="cus_name" readonly="true" align="center" value="{{}}"/>
+<br /><br />
+<label align="center">Email:</label>
+<input type="email" id="cus_email" name="cus_email" readonly="true" align="center"/>
+<br /><br />
+<label align="center">Contact:</label>
+<input type="text" id="cus_contact" name="cus_contact" readonly="true" align="center"/>
+<br /><br />
+<label align="center">Address:</label>
+<textarea id="cus_email" name="cus_email" readonly="true" align="center"></textarea>
+<br /><br />
+<button>Edit</button>
+<button>Save</button>
+</form>
+</div>
+</body>
+</html>

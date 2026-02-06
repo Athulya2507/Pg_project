@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Product view for customer</title>
+</head>
+
+<body>
+<form action="/editprodviewbus_post/" method="POST" class="forms" enctype="multipart/form-data">
+  
+{% csrf_token %}
+<table width="592" border="1">
+  <tr>
+    <td width="51">Sl.No.</td>
+    <td width="46">Prod_Name</td>
+    <td width="46">Prod_cat</td>
+    <td width="47">Prod_des</td>
+    <td width="78">Business_name</td>
+    <td width="60">Prod_price</td>
+    <td width="66">Availability</td>
+    <td width="58">Prod_image</td>
+    <!-- <td width="58">Enquiry</td>
+    <td width="58">Feedback</td> -->
+   </tr>
+   {% for i in data %}
+    <tr>
+    <td>{{forloop.counter}}</td>
+    <td>{{i.Prod_Name}}</td>
+    <td>{{i.Prod_cat}}</td>
+    <td>{{i.Prod_des}}</td>
+    <td>{{i.Busreg.Business_Name}}</td>
+    <td>{{i.Prod_price}}</td>
+    <td>{{i.Availability}}</td>
+    <td><img src="{{i.Prod_image}}" width="200" height="200"></td>
+    <!-- <td><a href="/enquiry/{{i.id }}" width="200" height="200">Send Enquiry</a></td>
+    <td><a href="/feedback/{{i.id }}" width="200" height="200">Give Feedback</a></td> -->
+   </tr>
+   {% endfor %}
+   
+</table>
+
+
+</form> 
+</body>
+</html>

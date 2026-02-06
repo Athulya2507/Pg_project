@@ -1,0 +1,41 @@
+{% extends  'customer/header-footer.html'%}
+<head>
+    <title>{% block title %}Products{% endblock %}</title>
+</head>
+<body>
+{% block body %}
+<section class="brand_section">
+  <div class="container">
+    <div class="heading_container">
+      <h2>
+       Businesses
+      </h2>
+    </div>
+    <div class="brand_container layout_padding2">
+      {% for i in bus_names %}
+      <div class="box">
+          <a href="/business_products/{{i.id}}/">
+          <div class="img-box">
+            <img src="{{ i.Logo.url }}" alt="">
+          </div>
+          <div class="detail-box">
+            <h6>
+              {{i.Business_Name}}
+            </h6>
+          </div>
+          <div class="detail-box">
+            <h6>
+              {{i.Owner_Name}}
+            </h6>
+          </div>
+        </a>
+        <a href="/ind_contact/{{i.id}}/">Contact Us</a>
+      </div>
+      
+      {% endfor %}
+      
+    </div>
+  </div>
+</section>
+</body>
+{% endblock %}

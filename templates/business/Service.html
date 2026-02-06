@@ -1,0 +1,76 @@
+{% extends 'business/header-footer_bus.html' %}
+{% load static %}
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
+  {% block title %}Products List{% endblock %}
+  {% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services List</title>
+    <link rel="stylesheet" href="{% static 'productcss.css' %}">
+</head>
+<body>
+
+<h2>Services List</h2>
+
+<div class="product-container">
+    {% for i in data %}
+    <div class="product-card">
+        <!-- <img src="{{ i.Prod_image.url }}" alt="Product Image"> -->
+        <div class="card-content">
+            <h3>{{ i.Serv_cat }}</h3>
+            <!-- <p class="category">{{ i.Prod_cat }}</p>
+            <p class="description">{{ i.Prod_des }}</p> -->
+            <p class="business">Business: {{ i.Busreg.Business_Name }}</p>
+            <p class="price">Service Description: {{ i.Serv_desc }}</p>
+            <!-- <p class="availability">Availability: {{ i.Availability }}</p> -->
+
+            <div class="buttons">
+                <a href="/editservice/{{i.id}}" class="edit-btn">Edit</a>
+                <a href="/delserv/{{i.id}}" class="delete-btn">Delete</a>
+                <!-- <a href="/offers/" class="view-btn">View Offers</a> -->
+                <!-- <a href="/addoffers/{{ i.id }}" class="add-btn">Add Offers</a> -->
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<table width="200" border="1">
+  <tr>
+    <td>Sl.No.</td>
+    <td>Business Name</td>
+    <td>Service Category</td>
+    <td>Service Charge</td>
+    <td>Edit</td>
+    <td>Delete</td>
+  </tr>
+ 
+  {% for i in data %}
+  <tr>
+    <td>{{forloop.counter}}</td>
+    <td>{{i.Busreg.Business_Name}}</td>
+    <td>{{i.Serv_cat}}</td>
+    <td>{{i.Serv_charge}}</td>
+    <td><a href="/editservice/{{i.id}}">Edit Service</a></td>
+    <td><a href="/delserv/{{i.id}}">Delete Service</a></td>
+  </tr>
+ {% endfor %}
+</table>
+</body>
+</html> -->

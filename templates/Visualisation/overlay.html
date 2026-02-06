@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Designer</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 20%;
+            padding: 10px;
+            background-color: #f8f8f8;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .room-container {
+            position: relative;
+            border: 1px solid #ccc;
+            background-color: #eaeaea;
+        }
+
+        canvas {
+            border: 1px solid #000;
+        }
+
+        .product {
+            width: 100px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .header {
+            text-align: center;
+            padding: 10px;
+        }
+
+        button {
+            margin: 10px;
+        }
+        /* Styles for the right sidebar */
+        .right-sidebar {
+            text-align: center;
+        }
+
+        .right-sidebar h3 {
+            margin-bottom: 10px;
+        }
+
+        .product-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .product-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .total-price {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>Rooms</h3>
+        {% for room in rooms %}
+            <img class="product" src="{{ room.image.url }}" alt="Room {{ room.id }}">
+        {% endfor %}
+        <h3>Recent Designed</h3>
+        {% for hh in droom %}
+            <img class="product" src="{{ hh.image.url }}" alt="Room {{ hh.id }}">
+        {% endfor %}
+        <h3>Products</h3>
+        {% for product in products %}
+            <img class="product" src="{{ product.Prod_image.url }}" draggable="true" data-price="{{ product.Prod_price }}" alt="Product {{ product.id }}">
+            <p>Price: ₹{{ product.Prod_price }}</p>
+
+        {% endfor %}
+    </div>
+
+    <div class="main-content">
+        <h3 class="header">Room Designer</h3>
+        <div class="room-container">
+            <canvas id="roomCanvas"></canvas>
+        </div>
+        <button id="deleteProduct">Delete Selected Product</button>
+        <button id="clearCanvas">Clear Canvas</button>
+        <button id="saveDesign">Save Design</button>
+    </div>
+    <div class="right-sidebar">
+        <h3>Selected Products</h3>
+        <ul class="product-list" id="productList"></ul>
+        <p class="total-price">Total Price: ₹<span id="totalPrice">0</span></p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('roomCanvas');
+            const ctx = canvas.getContext('2d');
+            const productList = document.getElementById('productList');
+            const totalPriceElem = document.getElementById('totalPrice');
+            const productsOnCanvas = [];
+            let roomImage = new Image();
+            let selectedProduct = null;
+            const handleSize = 10; // Size of the resizing handle
+            let isDragging = false;
+            let isResizing = false;
+            let dragOffsetX = 0;
+            let dragOffsetY = 0;
+    
+            // Load the initial room image
+            {% if rooms %}
+            roomImage.src = "{{ rooms.0.image.url }}";
+            roomImage.onload = () => {
+                canvas.width = roomImage.width;
+                canvas.height = roomImage.height;
+                ctx.drawImage(roomImage, 0, 0, roomImage.width, roomImage.height);
+            };
+            {% endif %}
+            function updateProductList() {
+                productList.innerHTML = '';
+                let total = 0;
+
+                productsOnCanvas.forEach(product => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>Product ₹{product.id}</span> <span>$${product.price}</span>`;
+                    productList.appendChild(li);
+                    total += product.price;
+                });
+
+                totalPriceElem.textContent = total.toFixed(2);
+            }
+    
+            // Change room image when clicking on a room in the sidebar
+            document.querySelectorAll('.sidebar .product').forEach((room) => {
+                room.addEventListener('click', () => {
+                    roomImage.src = room.src;
+                    roomImage.onload = () => {
+                        redrawCanvas();
+                    };
+                });
+            });
+    
+            // Attach dragstart to all draggable products
+            document.querySelectorAll('.product').forEach(product => {
+                product.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('src', product.src);
+                    e.dataTransfer.setData('price', product.getAttribute('data-price'));
+                    e.dataTransfer.setData('id', product.alt.split(' ')[1]);
+                });
+            });
+    
+            // Allow drop on canvas
+            canvas.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+    
+            // Handle drop event
+            canvas.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+    
+                const productSrc = e.dataTransfer.getData('src');
+                const productPrice = parseFloat(e.dataTransfer.getData('price'));
+                const productId = e.dataTransfer.getData('id');
+                if (!productSrc) return;
+    
+                const productImage = new Image();
+                productImage.src = productSrc;
+    
+                productImage.onload = () => {
+                    const product = {
+                        id: productId,
+                        image: productImage,
+                        x: x - 50,
+                        y: y - 50,
+                        width: 100,
+                        height: 100,
+                        price: productPrice
+
+                    };
+    
+                    productsOnCanvas.push(product);
+                    updateProductList();
+                    redrawCanvas();
+                };
+            });
+    
+            // Redraw the canvas
+            function redrawCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(roomImage, 0, 0, canvas.width, canvas.height);
+    
+                productsOnCanvas.forEach(product => {
+                    ctx.drawImage(product.image, product.x, product.y, product.width, product.height);
+    
+                    if (selectedProduct === product) {
+                        ctx.strokeStyle = 'red';
+                        ctx.lineWidth = 2;
+                        ctx.strokeRect(product.x, product.y, product.width, product.height);
+    
+                        // Draw resize handle
+                        ctx.fillStyle = 'blue';
+                        ctx.fillRect(
+                            product.x + product.width - handleSize,
+                            product.y + product.height - handleSize,
+                            handleSize,
+                            handleSize
+                        );
+                    }
+                });
+            }
+    
+            // Handle mouse down event for moving or resizing
+            canvas.addEventListener('mousedown', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+    
+                if (selectedProduct) {
+                    // Check if the mouse is over the resize handle
+                    if (
+                        x >= selectedProduct.x + selectedProduct.width - handleSize &&
+                        x <= selectedProduct.x + selectedProduct.width &&
+                        y >= selectedProduct.y + selectedProduct.height - handleSize &&
+                        y <= selectedProduct.y + selectedProduct.height
+                    ) {
+                        isResizing = true;
+                        return;
+                    }
+    
+                    // Check if the mouse is over the product for dragging
+                    if (
+                        x >= selectedProduct.x &&
+                        x <= selectedProduct.x + selectedProduct.width &&
+                        y >= selectedProduct.y &&
+                        y <= selectedProduct.y + selectedProduct.height
+                    ) {
+                        isDragging = true;
+                        dragOffsetX = x - selectedProduct.x;
+                        dragOffsetY = y - selectedProduct.y;
+                        return;
+                    }
+                }
+    
+                // Select a product if clicked
+                selectedProduct = null;
+                for (const product of productsOnCanvas) {
+                    if (
+                        x >= product.x &&
+                        x <= product.x + product.width &&
+                        y >= product.y &&
+                        y <= product.y + product.height
+                    ) {
+                        selectedProduct = product;
+                        break;
+                    }
+                }
+    
+                redrawCanvas();
+            });
+    
+            // Handle mouse move event for dragging or resizing
+            canvas.addEventListener('mousemove', (e) => {
+                if (isDragging && selectedProduct) {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+    
+                    selectedProduct.x = x - dragOffsetX;
+                    selectedProduct.y = y - dragOffsetY;
+                    redrawCanvas();
+                } else if (isResizing && selectedProduct) {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+    
+                    selectedProduct.width = x - selectedProduct.x;
+                    selectedProduct.height = y - selectedProduct.y;
+                    redrawCanvas();
+                }
+            });
+    
+            // Handle mouse up event
+            canvas.addEventListener('mouseup', () => {
+                isDragging = false;
+                isResizing = false;
+            });
+           
+            // Delete the selected product
+           
+            
+            
+              document.getElementById('deleteProduct').addEventListener('click', () => {
+               if (selectedProduct) {
+                    const index = productsOnCanvas.indexOf(selectedProduct);
+                    if (index > -1) productsOnCanvas.splice(index, 1);
+                    selectedProduct = null;
+                    updateProductList();
+                    redrawCanvas();
+
+                }
+           });  
+        
+            // Clear the canvas
+            document.getElementById('clearCanvas').addEventListener('click', () => {
+                productsOnCanvas.length = 0; // Clear all products
+                selectedProduct = null; // Deselect any selected product
+                // Clear the product list and total price
+                productList.innerHTML = '';  
+                totalPriceElem.textContent = '0';  
+
+                redrawCanvas(); // Redraw the canvas with just the room image
+            });
+    
+            // Save the final design
+            document.getElementById('saveDesign').addEventListener('click', () => {
+                const dataURL = canvas.toDataURL();
+                fetch('/save_design/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({ image: dataURL }),
+                })
+                .then(response => response.json())
+                .then(data => alert('Design saved successfully!'))
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+    
+</body>
+</html> 

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Home Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            padding: 0;
+            background-color:white;
+            box-sizing: border-box;
+        }
+        .content {
+          color: yellowgreen;
+            text-decoration: none;
+            margin: 0 15px;
+           
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: royalblue;
+            padding: 15px;
+            color: white;
+        }
+        .para {
+            color: black;
+            text-decoration: none;
+            margin: 0 15px; 
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: royalblue;
+            padding: 15px;
+            color: white;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dropdown Container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Button */
+        .dropbtn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Dropdown Content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: olive;
+            min-width: 150px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            right: 0;
+        }
+
+        /* Dropdown Links */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Show Dropdown on Hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .style {
+            background-color: salmon;
+            padding:10px;
+            margin-top: 30px;
+            margin-right: 5px;
+            margin-left: 5px;
+            margin-bottom: 100px;
+           
+        }
+        .style1 {
+            background-color:orange;
+           padding:10px;
+            margin-top: 30px;
+            margin-right: 5px;
+            margin-left: 5px;
+            margin-bottom: 100px;
+         
+        }
+        .style2 {
+            background-color:olivedrab;
+            padding: 10px;
+            margin-top: 30px;
+            margin-right: 5px;
+            margin-left: 5px;
+            margin-bottom: 100px;
+          
+        }
+        .style3 {
+            background-color:blueviolet;
+            
+            padding: 10px;
+           
+            margin-top: 30px;
+            margin-right: 5px;
+            margin-left: 5px;
+            margin-bottom: 100px;
+        }
+        .divs{
+            display: flex;
+        } 
+        .section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            color:black;
+        }
+
+        .text {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .text h2 {
+            color: royalblue;
+        }
+
+        .image {
+            width: 50%;
+        }
+
+        .image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .slides {
+            display: flex;
+            width: 300%; /* 3 images */
+            animation: slide 30s infinite;
+        }
+        .slides img {
+            width: 100%;
+            height: 400px;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            33% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+        
+
+    </style>
+</head>
+<body>
+<header class="header">
+    <nav class="nav-links">
+        <h1 align="right" color="white"><strong>Roomify</strong></h1>
+        <a href="" class="active">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Profile ▼</button>
+            <div class="dropdown-content">
+                <!-- <a href="/cusprofile_view/">View Profile</a> -->
+                <a href="/editprofile_cus/">Edit Profile</a>
+            </div>  
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Products ▼</button>
+            <div class="dropdown-content">
+                <a href="/cusprod_view/">View Product</a>
+            </div>  
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Business ▼</button>
+            <div class="dropdown-content">
+                <a href="/cusprod_view/">View Business</a>
+            </div>  
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Services ▼</button>
+            <div class="dropdown-content">
+                <a href="/cusserv_view/">View Service</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Offers ▼</button>
+            <div class="dropdown-content">
+                <a href="/cusoffers_view/">View Offers</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Contact ▼</button>
+            <div class="dropdown-content">
+                <a href="/cuscontact_view/">View contact details</a>
+            </div>
+        </div>
+        <!-- <a href="/feedback/">Add Feedback</a> -->
+        <a href="/logout/">Logout</a>
+    </nav>
+</header>
+<div class="content">
+   <h1 align="center" color="yellowgreen"><strong>"Your Home, Your Style – Discover the Art of Decor!"</strong></h1> 
+   <h3 align="center"></h3> 
+   <div class="section">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+        fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+        nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+        Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+        amet aliquid maiores quos magni! Beatae!
+   </div>
+   <div class="slider">
+    <div class="slides">
+        <img src="../asset/img4.jpg" alt="Image 1">
+        <img src="../asset/img5.jpg" alt="Image 2">
+        <img src="../asset/img6.jpg" alt="Image 3">
+        <img src="../asset/img7.jpg" alt="Image 4">
+        <img src="../asset/img1.jpeg" alt="Image 5">
+        <img src="../asset/cusprof.jpg" alt="Image 6">
+        <img src="../asset/img.jpg" alt="Image 7">
+        <img src="../asset/img2.jpg" alt="Image 8">
+    </div>
+</div>
+   <div class="divs">
+   <div class="style">
+   <p class="para">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+   </p>
+   </div>
+   <div class="style2">
+   <p class="para">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+   </p>
+   </div>
+   <div class="style1">
+   <p class="para">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+   </p>
+   </div>
+   <div class="style3">
+   <p class="para">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+   </p>
+   </div>
+   </div>
+</div>
+</div>
+<div class="section">
+    <div class="text">
+        <h2>Stylish Furniture for Every Room</h2>
+        <p>Discover elegant furniture and décor that transforms your space into a beautiful and cozy home.</p>
+    </div>
+    <div class="image">
+        <img src="../asset/img3.jpg" alt="Stylish Furniture">
+    </div>
+</div>
+
+<div class="section">
+    <div class="text">
+        <h2>Brighten Up Your Home</h2>
+        <p>Explore our stunning collection of lighting options to create the perfect ambiance.</p>
+    </div>
+    <div class="image">
+        <img src="../asset/img4.jpg" alt="Home Lighting">
+    </div>
+</div>
+<footer class="footer">
+    <nav class="nav-links">
+        <p><strong>Address:</strong>A108 Adam Street
+           India, NY 535022</p>&nbsp;&nbsp;&nbsp;
+        <p><strong>Phone:</strong> <span>+91 5589 55488 55</span>&nbsp;&nbsp;&nbsp;</p>
+        <p><strong>Email:</strong><span>Roomify@gmail.com</span></p>
+    </nav>
+</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+

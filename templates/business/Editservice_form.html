@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Service Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            width: 500px;
+            margin: 60px auto;
+            padding: 30px 40px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        select, input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #2c98f0;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1976d2;
+        }
+
+        table {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <form action="/editservice_post/" method="POST" enctype="multipart/form-data">
+        <h3>Edit Service Details</h3>
+
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{edit_serv.id}}" />
+
+        <label for="serv_cat">Enter the Service Category:</label>
+        <select name="serv_cat" id="serv_cat">
+            <option value="{{edit_serv.Serv_cat}}">{{edit_serv.Serv_cat}}</option>
+            <option value="Full-Service Interior Design">Full-Service Interior Design</option>
+            <option value="Furniture Layout and Space Planning">Furniture Layout and Space Planning</option>
+            <option value="Furniture,Fabric,and Accessories Selections and Specifications">Furniture, Fabric, and Accessories Selections and Specifications</option>
+            <option value="Tile and Surface Selection and Layout">Tile and Surface Selection and Layout</option>
+            <option value="Finish Selections and Specifications">Finish Selections and Specifications</option>
+            <option value="Hardware,Plumbing, and Appliance Specification">Hardware, Plumbing, and Appliance Specification</option>
+            <option value="Lighting Design">Lighting Design</option>
+            <option value="Interior Detailing">Interior Detailing</option>
+        </select>
+
+        <label for="serv_desc">Enter Service Description:</label>
+        <input type="text" id="serv_desc" name="serv_charge" value="{{edit_serv.Serv_desc}}" />
+
+        <input type="submit" value="Update" />
+    </form>
+</div>
+
+</body>
+</html>

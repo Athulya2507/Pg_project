@@ -1,0 +1,51 @@
+{% extends 'business/header-footer_bus.html' %}
+{% load static %}
+
+{% block title %}Product Feedbacks{% endblock %}
+
+{% block body %}
+<section class="layout_padding" style="background-color: #f9f9f9; padding: 40px 0;">
+  <div class="container">
+    <div class="heading_container text-center mb-5">
+      <h2 class="text-dark">Product Feedbacks</h2>
+    </div>
+
+    {% for i in data %}
+    <div class="card mb-4 shadow-sm p-3 rounded" style="border-left: 6px solid #ffc700; background-color: #fff;">
+      <div class="card-body">
+        <h5 class="mb-2"><strong>Customer:</strong> {{ i.Cusreg.Cus_Name }}</h5>
+        <h6 class="mb-2"><strong>Product:</strong> {{ i.Products.Prod_Name }}</h6>
+        <p class="mb-2"><strong>Message:</strong> {{ i.Message }}</p>
+
+        <div class="mb-2">
+          <strong>Rating:</strong>
+          {% with i.Rating|add:"0" as rating %}
+            {% for star in "12345" %}
+              {% if forloop.counter <= rating %}
+                <span style="color: #ffc700; font-size: 22px;">&#9733;</span>
+              {% else %}
+                <span style="color: #ccc; font-size: 22px;">&#9733;</span>
+              {% endif %}
+            {% endfor %}
+
+            <span style="font-size: 16px; margin-left: 10px;">
+              {% if rating == 5 %} Excellent
+              {% elif rating == 4 %} Good
+              {% elif rating == 3 %} Satisfied
+              {% elif rating == 2 %} Needs Improvement
+              {% elif rating == 1 %} Very Bad
+              {% else %} No Rating
+              {% endif %}
+            </span>
+          {% endwith %}
+        </div>
+
+        <p class="text-muted mb-0"><strong>Time:</strong> {{ i.Feedbacktime }}</p>
+      </div>
+    </div>
+    {% empty %}
+      <div class="alert alert-warning text-center">No feedback found.</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

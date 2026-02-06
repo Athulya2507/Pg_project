@@ -1,0 +1,223 @@
+{% extends 'customer/header-footer.html' %}
+{% load static %}
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
+{% block title %}Products List{% endblock %}
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>Roomify - Image Overlay Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            /* background: white; */
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        form {
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            margin: auto;
+        }
+
+        td {
+            padding: 0.75rem;
+        }
+
+        input[type="file"], input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+        }
+
+        button {
+            padding: 0.6rem 1.5rem;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #28a745;
+        }
+
+        a {
+            text-decoration: none;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .room, .product {
+            width: 150px;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .room:hover, .product:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .canvas-container {
+            margin-top: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        canvas {
+            border: 2px solid #ccc;
+            border-radius: 0.5rem;
+            background: white;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .room, .product {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Roomify - Image Overlay Tool</h1>
+    </header>
+
+    <div class="container">
+        <form action="/upload_images/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><label for="room">Upload Room Image:</label></td>
+                    <td><input type="file" name="room" required></td>
+                </tr>
+                <!-- Optional Product Upload -->
+                <!--
+                <tr>
+                    <td><label for="product">Upload Product Image:</label></td>
+                    <td><input type="file" name="product"></td>
+                </tr>
+                <tr>
+                    <td><label for="name">Product Name:</label></td>
+                    <td><input type="text" name="name"></td>
+                </tr>
+                -->
+                <tr>
+                    <td colspan="2" align="center">
+                        <button type="submit">Upload</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <a href="/design/">Go to Design Page</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <h2>Uploaded Room Images</h2>
+        <div class="gallery">
+            {% for room in rooms %}
+                <img class="room" src="{{ room.image.url }}" id="room-{{ room.id }}">
+            {% endfor %}
+        </div>
+
+        <h2>Uploaded Product Images</h2>
+        <div class="gallery">
+            {% for product in products %}
+                <img class="product" src="{{ product.Prod_image.url }}" id="product-{{ product.id }}" draggable="true">
+            {% endfor %}
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+            <img id="overlay" class="overlay" draggable="false" />
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const overlay = document.getElementById('overlay');
+        const context = canvas.getContext('2d');
+
+        document.querySelectorAll('.room').forEach(room => {
+            room.addEventListener('click', () => {
+                const img = new Image();
+                img.src = room.src;
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.drawImage(img, 0, 0);
+                };
+            });
+        });
+
+        document.querySelectorAll('.product').forEach(product => {
+            product.addEventListener('dragstart', (e) => {
+                overlay.src = product.src;
+            });
+
+            canvas.addEventListener('dragover', (e) => e.preventDefault());
+
+            canvas.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const img = new Image();
+                img.src = overlay.src;
+                img.onload = () => context.drawImage(img, x, y, 100, 100);
+            });
+        });
+    </script>
+    {% endblock %}
+</body>
+
+</html>

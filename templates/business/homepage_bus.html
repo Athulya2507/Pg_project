@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Home Page</title>
+    <style>
+         body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .content {
+          color: yellowgreen;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: royalblue;
+            padding: 15px;
+            color: white;
+        }
+        .para {
+            color: black;
+            text-decoration: none;
+            margin: 0 15px; 
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: royalblue;
+            padding: 15px;
+            color: white;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dropdown Container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Button */
+        .dropbtn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Dropdown Content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: olive;
+            min-width: 150px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            right: 0;
+        }
+
+        /* Dropdown Links */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Show Dropdown on Hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <nav class="nav-links">
+        <h1 class="header">Roomify</h1>
+        <a href="" class="active">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Profile ▼</button>
+            <div class="dropdown-content">
+                <!-- <a href="/viewprofile_bus/">View Profile</a> -->
+                <a href="/editprofile_bus/">Edit Profile</a>
+            </div>  
+        </div>
+        <div class="dropdown">
+            <button >Products ▼</button>
+            <div class="dropdown-content">
+                <a href="/addprod/">Add Product</a>
+                <a href="/prodview_bus/">View Products</a> 
+            </div>  
+        </div>
+        <!-- <a href="/delprod/">Delete Products</a> -->
+        <div class="dropdown">
+            <button class="dropbtn">Services ▼</button>
+            <div class="dropdown-content">
+                <a href="/service/">View Service</a>
+                <a href="/addservice/">Add Service</a>
+            </div>  
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Contact ▼</button>
+            <div class="dropdown-content">
+                <a href="/contact/">View Contact</a> 
+                <a href="/addcontact/">Add Contact</a>
+            </div>  
+        </div>
+        <a href="/viewenq_bus/">View Enquiry</a>
+        <a href="/viewfeed_bus/">View Feedback</a>
+        <a href="/log_out/">Logout</a>
+    </nav>
+</header>
+<div class="content">
+   <h1 align="center">Roomify</h1> 
+   <h3 align="center">Where Style Meets Comfort</h3> 
+   <p class="para">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+   </p>
+   <p class="para">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+   </p>
+   <p class="para">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+   </p>
+   <p class="para">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti impedit nemo veniam, 
+    fugit debitis dolores iusto similique voluptatum tenetur in modi excepturi vero eum fugiat unde, 
+    nobis doloribus quisquam quod?Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, nulla quisquam? 
+    Cum praesentium harum provident fuga temporibus iure blanditiis similique. Ullam quaerat ipsa ea, 
+    amet aliquid maiores quos magni! Beatae!
+   </p>
+</div>
+<footer class="footer">
+    <nav class="nav-links">
+        <p><strong>Address:</strong>A108 Adam Street
+           India, NY 535022</p>
+        <p><strong>Phone:</strong> <span>+91 5589 55488 55</span>&nbsp;&nbsp;&nbsp;
+        <strong>Email:</strong><span>Roomify@gmail.com</span></p>
+    </nav>
+</footer>
+</body>
+</html>
+
+
+
+
+
+
+
